@@ -153,10 +153,10 @@ app.post("/api/register", async (req, res) => {
   // Our register logic starts here
   try {
     // Get user input
-    const { name, room_number, building_number, password, email } = req.body;
+    const { name, address, password, email } = req.body;
 
     // Validate user input
-    if (!(email && password && name && room_number && building_number)) {
+    if (!(email && password && name && address)) {
       res.status(400).send("All input is required");
     }
     const oldUser = await User.findOne({ email });
@@ -169,8 +169,7 @@ app.post("/api/register", async (req, res) => {
     // Create user in our database
     const user = await User.create({
       name,
-      room_number,
-      building_number,
+      address,
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
     });
@@ -244,6 +243,6 @@ app.get("/welcome", auth, (req, res) => {
 });
 module.exports = app;
 
-app.listen(process.env.PORT || "3001", () => {
-  console.log(`Server running on port 3001`);
+app.listen("3009", () => {
+  console.log(`Server running on port 3009`);
 });
